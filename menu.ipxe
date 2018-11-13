@@ -1,0 +1,37 @@
+#!ipxe
+menu Selection
+item kali KaliLinux
+item lightning Lightning Linux
+item arch Arch Linux
+item sanboot SanBoot
+item tinycore TinyCore
+choose os && goto ${os}
+
+:kali
+kernel http://10.8.1.2/kali/vmlinuz
+initrd http://10.8.1.2/kali/initrd.img
+imgargs vmlinuz boot=live config hooks=filesystem username=live noeject fetch=http://10.8.1.2/kali/filesystem.squashfs
+boot
+
+:lightning
+kernel http://10.8.1.2/light/vmlinuz
+initrd http://10.8.1.2/light/initrd.gz
+imgargs vmlinuz boot=casper config hooks=filesystem username=live noeject
+initrd http://10.8.1.2/light/filesystem.squashfs
+initrd http://10.8.1.2/light/filesystem.manifest
+initrd http://10.8.1.2/light/filesystem.manifest-desktop
+initrd http://10.8.1.2/light/filesystem.size
+boot
+
+:arch
+kernel http://10.8.1.2/arch/vmlinuz
+initrd http://10.8.1.2/arch/archiso.img
+imgargs vmlinuz  boot=live config username=live noeject
+boot
+
+:sanboot
+sanboot http://10.8.1.2/lightning.iso
+boot
+
+:tinycore
+sanboot http://10.8.1.2/TinyCore-current.iso
