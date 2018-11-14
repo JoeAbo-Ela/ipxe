@@ -1,44 +1,29 @@
 #!ipxe
 menu Selection
 item kali KaliLinux
+item debian Debian Live
 item ubuntu Ubuntu
-item lightning Lightning Linux
-item arch Arch Linux
 item sanboot SanBoot
-item tinycore TinyCore
 choose os && goto ${os}
 
 :kali
-kernel http://10.8.1.18/kali/vmlinuz
-initrd http://10.8.1.18/kali/initrd.img
-imgargs vmlinuz boot=live config hooks=filesystem username=live noeject fetch=http://10.8.1.18/kali/filesystem.squashfs
+kernel http://${next-server}/kali/vmlinuz
+initrd http://${next-server}/kali/initrd.img
+imgargs vmlinuz boot=live config hooks=filesystem username=live noeject fetch=http://${next-server}/kali/filesystem.squashfs
+boot
+
+:debian
+kernel http://${next-server}/debian/vmlinuz1
+initrd http://${next-server}/debian/initrd1.img
+imgargs vmlinuz1 initrd=initrd1.img boot=live config hooks=filesystem username=live noeject fetch=http://${next-server}/debian/filesystem.squashfs
 boot
 
 :ubuntu
-kernel http://10.8.1.18/ubuntu/casper/vmlinuz
-initrd http://10.8.1.18/ubuntu/casper/initrd
-imgargs vmlinuz initrd=initrd root=/dev/nfs boot=casper netboot=nfs nfsroot=10.8.1.18:/ubuntu ip=dhcp splash quiet -- || read void
-boot
-
-:lightning
-kernel http://10.8.1.18/light/vmlinuz
-initrd http://10.8.1.18/light/initrd.gz
-imgargs vmlinuz boot=casper config hooks=filesystem username=live noeject
-initrd http://10.8.1.18/light/filesystem.squashfs
-initrd http://10.8.1.18/light/filesystem.manifest
-initrd http://10.8.1.18/light/filesystem.manifest-desktop
-initrd http://10.8.1.18/light/filesystem.size
-boot
-
-:arch
-kernel http://10.8.1.18/arch/vmlinuz
-initrd http://10.8.1.18/arch/archiso.img
-imgargs vmlinuz  boot=live config username=live noeject
+kernel http://${next-server}/ubuntu/casper/vmlinuz
+initrd http://${next-server}/ubuntu/casper/initrd
+imgargs vmlinuz initrd=initrd root=/dev/nfs boot=casper netboot=nfs nfsroot=${next-server}:/ubuntu ip=dhcp splash quiet -- || read void
 boot
 
 :sanboot
-sanboot http://mirror.math.princeton.edu/pub/ubuntu-iso/trusty/ubuntu-14.04.5-desktop-i386.iso
+sanboot http://www.privacy-cd.org/download/Discreete_Linux_2016.1_beta1.hybrid.iso
 boot
-
-:tinycore
-sanboot http://10.8.1.18/TinyCore-current.iso
