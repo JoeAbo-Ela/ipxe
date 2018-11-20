@@ -1,4 +1,5 @@
 #!ipxe
+
 menu Selection
 item kali KaliLinux
 item debian Debian Live
@@ -18,8 +19,7 @@ imgargs vmlinuz initrd=initrd.img boot=live config hooks=filesystem username=liv
 boot
 
 :fedora
-imgfree
 kernel http://${next-server}/fedora/vmlinuz  initrd=initrd.img
 initrd http://${next-server}/fedora/initrd.img
-imgargs vmlinuz ip=dhcp  root=live:http://${next-server}/fedora/squashfs.img
+imgargs vmlinuz initrd=initrd.img root=live:http://${next-server}/fedora/squashfs.img
 boot
